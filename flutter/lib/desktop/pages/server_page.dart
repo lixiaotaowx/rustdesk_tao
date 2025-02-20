@@ -849,7 +849,6 @@ class _CmControlPanel extends StatelessWidget {
             },
           ),
         ),
-        
         Offstage(
           offstage: !client.fromSwitch,
           child: buildButton(context,
