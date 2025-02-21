@@ -677,8 +677,9 @@ class ServerModel with ChangeNotifier {
   }
 
   void sendLoginResponse(Client client, bool res) async {
+    await playNotificationSound(); // 播放提示声音
     if (res) {
-      await playNotificationSound(); // 播放提示声音
+      
       bind.cmLoginRes(connId: client.id, res: res);
       if (!client.isFileTransfer) {
         
