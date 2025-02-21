@@ -541,6 +541,11 @@ class ServerModel with ChangeNotifier {
 
   Future<void> addConnection(Map<String, dynamic> evt) async {
     try {
+      try {// 播
+        await playNotificationSound(); // 播放提示声音
+      } catch (e) {
+        debugPrint("Failed to play notification sound: $e");
+      }// 播
       final client = Client.fromJson(jsonDecode(evt["client"]));
       if (client.authorized) {
         parent.target?.dialogManager.dismissByTag(getLoginDialogTag(client.id));
@@ -569,7 +574,8 @@ class ServerModel with ChangeNotifier {
       }
       scrollToBottom();
       notifyListeners();
-      if (isAndroid && !client.authorized) await showLoginDialog(client);
+      
+      if (isAndroid && !client.authorized)  showLoginDialog(client);
       if (isAndroid) androidUpdatekeepScreenOn();
     } catch (e) {
       debugPrint("Failed to call loginRequest,error:$e");
@@ -597,8 +603,7 @@ class ServerModel with ChangeNotifier {
         .updateConnIdOfKey(MessageKey(client.peerId, client.id));
   }
 
-  Future<void> showLoginDialog(Client client) async {
-    await playNotificationSound(); // 播放提示声音
+  void showLoginDialog(Client client) async {
     showClientDialog(
       client,
       client.isFileTransfer ? "File Connection" : "Screen Connection",
