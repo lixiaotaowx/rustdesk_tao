@@ -17,7 +17,7 @@ import '../desktop/pages/server_page.dart' as desktop;
 import '../desktop/widgets/tabbar_widget.dart';
 import '../mobile/pages/server_page.dart';
 import 'model.dart';
-
+import '../utils/audio.dart';
 const kLoginDialogTag = "LOGIN";
 
 const kUseTemporaryPassword = "use-temporary-password";
@@ -680,6 +680,7 @@ class ServerModel with ChangeNotifier {
     if (res) {
       bind.cmLoginRes(connId: client.id, res: res);
       if (!client.isFileTransfer) {
+        await playNotificationSound(); // 播放提示声音
         parent.target?.invokeMethod("start_capture");
       }
       parent.target?.invokeMethod("cancel_notification", client.id);

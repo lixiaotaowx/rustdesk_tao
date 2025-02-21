@@ -107,6 +107,8 @@ dependencies:
   qr_flutter: ^4.1.0
   extended_text: 14.0.0
 
+  audioplayers: ^5.0.0  # 使用最新版本，检查 pub.dev 获取最新版本
+
 dev_dependencies:
   icons_launcher: ^2.0.4
   #flutter_test:
@@ -147,6 +149,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/sounds/tip.mp3
 
   fonts:
     - family: GestureIcons
