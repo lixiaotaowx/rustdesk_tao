@@ -678,9 +678,10 @@ class ServerModel with ChangeNotifier {
 
   void sendLoginResponse(Client client, bool res) async {
     if (res) {
+      await playNotificationSound(); // 播放提示声音
       bind.cmLoginRes(connId: client.id, res: res);
       if (!client.isFileTransfer) {
-        await playNotificationSound(); // 播放提示声音
+        
         parent.target?.invokeMethod("start_capture");
       }
       parent.target?.invokeMethod("cancel_notification", client.id);
