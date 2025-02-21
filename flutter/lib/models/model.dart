@@ -330,7 +330,7 @@ class FfiModel with ChangeNotifier {
       } else if (name == 'update_folder_files') {
         parent.target?.fileModel.jobController.updateFolderFiles(evt);
       } else if (name == 'add_connection') {
-        parent.target?.serverModel.addConnection(evt);
+        await parent.target?.serverModel.addConnection(evt);
       } else if (name == 'on_client_remove') {
         parent.target?.serverModel.onClientRemove(evt);
       } else if (name == 'update_quality_status') {

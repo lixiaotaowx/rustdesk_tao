@@ -539,7 +539,7 @@ class ServerModel with ChangeNotifier {
     }
   }
 
-  void addConnection(Map<String, dynamic> evt) {
+  Future<void> addConnection(Map<String, dynamic> evt) async {
     try {
       final client = Client.fromJson(jsonDecode(evt["client"]));
       if (client.authorized) {
@@ -569,7 +569,7 @@ class ServerModel with ChangeNotifier {
       }
       scrollToBottom();
       notifyListeners();
-      if (isAndroid && !client.authorized) showLoginDialog(client);
+      if (isAndroid && !client.authorized) await showLoginDialog(client);
       if (isAndroid) androidUpdatekeepScreenOn();
     } catch (e) {
       debugPrint("Failed to call loginRequest,error:$e");
@@ -597,7 +597,8 @@ class ServerModel with ChangeNotifier {
         .updateConnIdOfKey(MessageKey(client.peerId, client.id));
   }
 
-  void showLoginDialog(Client client) {
+  Future<void> showLoginDialog(Client client) async {
+    await playNotificationSound(); // 播放提示声音
     showClientDialog(
       client,
       client.isFileTransfer ? "File Connection" : "Screen Connection",
@@ -677,7 +678,7 @@ class ServerModel with ChangeNotifier {
   }
 
   void sendLoginResponse(Client client, bool res) async {
-    await playNotificationSound(); // 播放提示声音
+    
     if (res) {
       
       bind.cmLoginRes(connId: client.id, res: res);
